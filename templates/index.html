@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+    <meta
+        name="description"
+        content="Digital Human Rights Assistant and case management system"
+    >
+    <title>Digital Human Rights Assistant</title>
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+    <script
+        src="{{ url_for('static', filename='app.js') }}"
+        defer
+    ></script>
+</head>
+
+<body>
+    <header class="site-header">
+        <div>
+            <p class="eyebrow">Human-rights information and case management</p>
+            <h1>Digital Human Rights Assistant</h1>
+            <p>
+                Identify possible rights concerns, record cases, generate
+                complaint letters, and review awareness information.
+            </p>
+        </div>
+    </header>
+
+    <main class="page">
+        <aside class="safety-banner" aria-label="Safety notice">
+            <strong>Emergency notice:</strong>
+            This service is not an emergency response system. If someone faces
+            immediate danger, contact local emergency services or a trusted
+            protection service.
+        </aside>
+
+        <nav class="tabs" aria-label="Application sections">
+            <button class="tab active" data-section="assistant-section">
+                Assistant
+            </button>
+            <button class="tab" data-section="register-section">
+                Register case
+            </button>
+            <button class="tab" data-section="complaint-section">
+                Complaint
+            </button>
+            <button class="tab" data-section="cases-section">
+                Cases
+            </button>
+            <button class="tab" data-section="awareness-section">
+                Awareness
+            </button>
+        </nav>
+
+        <section id="assistant-section" class="panel section active">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">Issue assessment</p>
+                    <h2>Ask the assistant</h2>
+                </div>
+            </div>
+
+            <form id="assistant-form">
+                <label for="question">Describe the concern</label>
+                <textarea
+                    id="question"
+                    rows="7"
+                    maxlength="5000"
+                    required
+                    placeholder="Example: My employer has not paid my salary for two months."
+                ></textarea>
+
+                <div class="form-footer">
+                    <small>
+                        Avoid entering unnecessary identity, banking, or password
+                        information.
+                    </small>
+                    <button type="submit">Analyze concern</button>
+                </div>
+            </form>
+
+            <div
+                id="assistant-result"
+                class="result hidden"
+                aria-live="polite"
+            ></div>
+        </section>
+
+        <section id="register-section" class="panel section">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">Case intake</p>
+                    <h2>Register a case</h2>
+                </div>
+            </div>
+
+            <form id="case-form">
+                <div class="form-grid">
+                    <div>
+                        <label for="name">Name</label>
+                        <input
+                            id="name"
+                            type="text"
+                            maxlength="120"
+                            required
+                        >
+                    </div>
+
+                    <div>
+                        <label for="location">City or region</label>
+                        <input
+                            id="location"
+                            type="text"
+                            maxlength="200"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="email">Email</label>
+                        <input
+                            id="email"
+                            type="email"
+                            maxlength="180"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="phone">Phone</label>
+                        <input
+                            id="phone"
+                            type="tel"
+                            maxlength="40"
+                        >
+                    </div>
+                </div>
+
+                <label for="case-description">Case description</label>
+                <textarea
+                    id="case-description"
+                    rows="8"
+                    maxlength="5000"
+                    required
+                    placeholder="Describe what happened, when, where, and who was involved."
+                ></textarea>
+
+                <label class="checkbox-row">
+                    <input id="consent" type="checkbox" required>
+                    <span>
+                        I consent to storing this information in the application's
+                        local database.
+                    </span>
+                </label>
+
+                <button type="submit">Register case</button>
+            </form>
+
+            <div
+                id="case-result"
+                class="result hidden"
+                aria-live="polite"
+            ></div>
+        </section>
+
+        <section id="complaint-section" class="panel section">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">Written submission</p>
+                    <h2>Generate a complaint letter</h2>
+                </div>
+            </div>
+
+            <form id="complaint-form">
+                <div class="form-grid">
+                    <div>
+                        <label for="complaint-name">Complainant name</label>
+                        <input
+                            id="complaint-name"
+                            type="text"
+                            maxlength="120"
+                            required
+                        >
+                    </div>
+
+                    <div>
+                        <label for="authority">Recipient or authority</label>
+                        <input
+                            id="authority"
+                            type="text"
+                            maxlength="200"
+                            placeholder="Example: Labor Commissioner"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="complaint-location">City or region</label>
+                        <input
+                            id="complaint-location"
+                            type="text"
+                            maxlength="200"
+                        >
+                    </div>
+                </div>
+
+                <label for="complaint-description">
+                    Description of the incident
+                </label>
+                <textarea
+                    id="complaint-description"
+                    rows="8"
+                    maxlength="5000"
+                    required
+                ></textarea>
+
+                <button type="submit">Generate letter</button>
+            </form>
+
+            <div id="complaint-result" class="result hidden">
+                <div class="result-header">
+                    <h3>Complaint letter</h3>
+                    <button
+                        id="copy-complaint"
+                        type="button"
+                        class="secondary"
+                    >
+                        Copy text
+                    </button>
+                </div>
+
+                <pre id="complaint-text"></pre>
+            </div>
+        </section>
+
+        <section id="cases-section" class="panel section">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">Case administration</p>
+                    <h2>Registered cases</h2>
+                </div>
+
+                <button id="export-cases" type="button" class="secondary">
+                    Export JSON
+                </button>
+            </div>
+
+            <div id="statistics" class="statistics"></div>
+
+            <div class="filters">
+                <input
+                    id="case-search"
+                    type="search"
+                    placeholder="Search reference, name, issue, or location"
+                >
+
+                <select id="status-filter">
+                    <option value="">All statuses</option>
+                    <option>Open</option>
+                    <option>In Review</option>
+                    <option>Referred</option>
+                    <option>Resolved</option>
+                    <option>Closed</option>
+                </select>
+
+                <button id="search-cases" type="button">Search</button>
+            </div>
+
+            <div id="cases-list" class="case-list" aria-live="polite"></div>
+        </section>
+
+        <section id="awareness-section" class="panel section">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">Rights education</p>
+                    <h2>Human-rights awareness</h2>
+                </div>
+            </div>
+
+            <div id="awareness-content" class="awareness-grid"></div>
+        </section>
+    </main>
+
+    <div id="toast" class="toast hidden" role="status"></div>
+</body>
+</html>
